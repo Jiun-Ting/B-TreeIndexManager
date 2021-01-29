@@ -1,0 +1,25 @@
+My testcases includes:
+
+0. Normal edge cases (append at the begin of the original intTests())
+  0.0 Scan vaild range start at 0 the smallest value of table
+  0.1 Scan vaild range end with 0 the largest value of table
+  0.2 highvalue=lowvalue && GTE && LTE && value lies within indices
+  0.3 highvalue=lowvalue && GTE && LTE && value lies outside indices
+1 test_outrange()
+  1.0 (-100, 100): lowerbound small than the smallest value of index 
+  1.1 (100, 5100): upperbound larger than the largest valuse of index
+  1.2 (-100, 5100): lowerbound small than the smallest value of index and Upperbound larger than the largest valuse of index
+2. errorTests(): Exception check (append at the end of the original errorTests() )
+  2.0 NoSuchKeyFoundException: input value both smaller than the minimun of index、input values both larger than the maximun of index
+  2.1 IndexScanCompletedException: ScanNext too many times
+3. test_empty(): Empty tree  
+4. test_negative()、createRelationForward_neg(const int = relationSize): Create all negative values and search.
+5. test_LargeRelation(const int): Large Relation, add wide/full range check to the original intTests.  
+  5.0 test_LargeRelation(1024 * 341 + 341): Nonleaf Split once and more entry within a leaf
+  5.1 test_LargeRelation(1024 * 341 + 342): Nonleaf Split once and more entry more than a leaf
+
+6. Also try different leaf/nonleaf size (Change the constant in btree.h manually)
+  6.0 Check if odd/even number and size matter: leaf size:[681, 685], nonleaf size:[1021, 1025]
+  6.1 Also check smaller and larger scale:(leaf, nonleaf)=(100, 150), (2000, 3000)
+
+
