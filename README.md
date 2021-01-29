@@ -1,1 +1,10 @@
 # B-TreeIndexManager
+
+Implemented functions are shown as below: 
+
+* BTreeIndex: The constructor first checks if the specified index file exists. An index file name is constructed as: concatenating the relational name with the offset of the attribute over which the index is built. The general form of the index file name is “ relName.attrOffset ”. If the index file exists, then the file is opened. Else, a new index file is created.
+* ~BTreeIndex: The destructor. Perform any cleanup that may be necessary, including clearing up any state variables, unpinning any B+ tree pages that are pinned, and flushing the index file (by calling the function bufMgr->flushFile() ). Note that this method does not delete the index file! But, deletion of the file object is required, which will call the destructor of File class causing the index file to be closed.
+* insertEntry: This method inserts a new entry into the index using the pair <key, rid>.
+* startScan: This method is used to begin a “filtered scan” of the index. For example, if the method is called using arguments (1, GT, 100, LTE) , then the scan should seek all entries greater than 1 and less than or equal to 100.
+* scanNext: This method fetches the record id of the next tuple that matches the scan criteria. If the scan has reached the end, then it should throw the exception IndexScanCompletedException . For instance, if there are two data entries that need to be returned in a scan, then the third call to scanNext must throw IndexScanCompletedException . A leaf page that has been read into the buffer pool for the purpose of scanning, should not be unpinned from buffer pool unless all the records from it are read, or the scan has reached its end. Use the right sibling page number value from the current leaf to move to the next leaf which holds successive key values for the scan.
+* endScan: This method terminates the current scan and unpins all the pages that have been pinned for the purpose of the scan. It throws ScanNotInitializedException when called before a successful startScan call.
